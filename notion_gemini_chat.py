@@ -5,11 +5,16 @@ import re
 import google.generativeai as genai
 from datetime import datetime
 
-# Dynamically import notion_pages.py
+# Dynamically import notion_pages.py and notion_databases.py
 spec = importlib.util.spec_from_file_location("notion_pages", "notion_pages.py")
 notion_pages = importlib.util.module_from_spec(spec)
 sys.modules["notion_pages"] = notion_pages
 spec.loader.exec_module(notion_pages)
+
+spec = importlib.util.spec_from_file_location("notion_databases", "notion_databases.py")
+notion_databases = importlib.util.module_from_spec(spec)
+sys.modules["notion_databases"] = notion_databases
+spec.loader.exec_module(notion_databases)
 
 def configure_gemini():
     """Configure the Gemini API client"""
@@ -89,12 +94,12 @@ def query_gemini(model, content, query):
         
         # General query: send to Gemini
         prompt = f"""You are a helpful assistant with access to the following Notion content:
-{content[:]}  # Truncate to avoid API limits
+{content}
 
 Answer the following query based on the content:
 {query}
 
-If the query asks for specific information (e.g., to-do lists or definitions), extract and format it clearly. If the information isn't in the content, say so. Be concise and clear."""
+If the query asks for specific information (e.g., to-do lists, definitions, or database entries), extract and format it clearly. If the information isn't in the content, say so. Be concise and clear."""
         
         response = model.generate_content(prompt)
         return response.text.strip()
@@ -110,21 +115,41 @@ def main():
     print(" Fetching accessible Notion pages...")
     pages = notion_pages.get_accessible_pages()
     
-    if not notion_pages.display_pages(pages):
+    # Fetch Notion databases
+    print(" Fetching accessible Notion databases...")
+    databases = notion_databases.get_accessible_databases()
+    
+    if not pages and not databases:
+        print(" No accessible pages or databases found.")
         return
+    
+    # Display available pages
+    if pages:
+        print("\n Available pages:")
+        for i, page in enumerate(pages, 1):
+            print(f"{i}. {page['title']} (Page)")
+    
+    # Display available databases
+    if databases:
+        print("\n Available databases:")
+        for i, db in enumerate(databases, 1):
+            print(f"{i}. {db['title']} (Database)")
     
     # Get user choice
     while True:
         try:
-            choice = input(f"\nEnter page number (1-{len(pages)}), 'all' for all pages, or 'q' to quit: ").strip()
+            total_items = len(pages) + len(databases)
+            choice = input(f"\nEnter item number (1-{total_items}), 'all' for all content, or 'q' to quit: ").strip()
             
             if choice.lower() == 'q':
                 print(" Goodbye!")
                 return
             
             if choice.lower() == 'all':
-                print("\n Extracting content from all pages...")
+                print("\n Extracting content from all pages and databases...")
                 all_content = ""
+                
+                # Process pages
                 for i, page in enumerate(pages, 1):
                     print(f"Processing page {i}/{len(pages)}: {page['title']}")
                     content_data = notion_pages.get_page_content(page['id'])
@@ -133,20 +158,34 @@ def main():
                         all_content += f"PAGE: {content_data['title']}\n"
                         all_content += f"{'='*80}\n"
                         all_content += content_data['content'] + "\n\n"
+                
+                # Process databases
+                for i, db in enumerate(databases, 1):
+                    print(f"Processing database {i}/{len(databases)}: {db['title']}")
+                    content = notion_databases.get_database_content(db['id'])
+                    if content:
+                        formatted_content = notion_databases.format_database_content(content)
+                        all_content += f"\n{'='*80}\n"
+                        all_content += formatted_content + "\n\n"
                 break
             
-            page_num = int(choice)
-            if 1 <= page_num <= len(pages):
-                selected_page = pages[page_num - 1]
-                content_data = notion_pages.get_page_content(selected_page['id'])
-                if content_data:
-                    all_content = content_data['content']
+            item_num = int(choice)
+            if 1 <= item_num <= total_items:
+                if item_num <= len(pages):
+                    # Selected a page
+                    selected_item = pages[item_num - 1]
+                    content_data = notion_pages.get_page_content(selected_item['id'])
+                    if content_data:
+                        all_content = content_data['content']
                 else:
-                    print(" Failed to extract content")
-                    return
+                    # Selected a database
+                    selected_item = databases[item_num - len(pages) - 1]
+                    content = notion_databases.get_database_content(selected_item['id'])
+                    if content:
+                        all_content = notion_databases.format_database_content(content)
                 break
             else:
-                print(f" Please enter a number between 1 and {len(pages)}")
+                print(f" Please enter a number between 1 and {total_items}")
                 
         except ValueError:
             print(" Please enter a valid number, 'all', or 'q' to quit")
