@@ -1,0 +1,991 @@
+
+================================================================================
+PAGE: Redis UseCases In LLM Application
+================================================================================
+# Redis UseCases In LLM Application
+
+---
+
+---
+> LLM: Large Language Model
+> LLM being everywhere requires ability of handling high-speed data processing, efficient management, and real-time responsiveness to deliver seamless user experiences.
+• Redis, with its in-memory architecture and versatility, is uniquely positioned to meet these needs. By offering sub-millisecond latency, rich data structures, and real-time processing capabilities, Redis enables developers to optimize LLM workflows in LLM applications effectively.
+
+## What really is Redis?
+
+---
+• Redis is a high-performance, in-memory data store known for its speed and flexibility.
+• Unlike traditional databases, Redis operates in memory, making it super fast for both read and write operations.
+• It supports a wide range of data structures, such as strings, lists, sets, and hashes, making it adaptable to diverse application needs.
+
+### What Makes Redis Unique?
+
+---
+1. Sub-Millisecond Latency: 
+  1. Redis delivers lightning-fast performance thanks to its in-memory architecture, ideal for application requiring real-time responsiveness.
+  1. Versatile Data Structures:
+  1. From caching to session storage and real-time analytics, Redis handles it all.
+    1. This flexibility enables Redis to handle diverse workloads, from simple caching to complex data pipelines.
+  1. Ease of Use:
+  1. It provides simple commands and developer-friendly APIs make redis accesible to all type of user.
+  
+### What is Upstash Redis?
+
+---
+• Upstash Redis takes the power of Redis and makes it serverless, this means we don’t have to manage infrastructure, worry about scaling, or deal with provisioning resources.
+Upstash Redis offers:
+1. Serverless Architecture:
+  1. There is no need to provision, configure, or manage servers.
+    1. This system automatically scales to accommodate the needs of our application, handling traffic spikes and heavy workloads by itself.
+  1. Pay-as-You-Go Pricing:
+1. Global Availabilty:
+  1. Data is accessible with low latency, no matter where our users are located.
+  With these features, Upstash Redis is particularly suited for modern AI applications, where scalabilty, speed and simplicity are paramount.
+## Some of the Most common Redis use cases in LLM applications.
+
+---
+
+## 1. Caching
+> What do we Cache in LLM applications? And why do we need to cache them?
+• The most use case is caching the responses for common inputs. Caching allows the application to store responses for frequently asked questions or common queries so that the application can bring the response to the customer.
+Just to give an example, let’s assume that you have an application that requires authentication with password. This application also provides a chatbot for customer support. I am pretty sure that there will be tons of questions like “I forgot my password, how to reset it?”, “Reset password”, “Can’t remember my password”, etc. I know that because I am also one of these customers . The answers for all these questions are same. By caching the response in Redis, we can easily return the same answer and guidance to these customers without calling the LLM every time.• Upstash also provides a semantic-cache tool for developers who want to cache the LLM responses according to their meaning. It uses the Upstash Vector.
+> What we gain when we cache the responses in LLM
+• Reducing Latency
+• Minimize computational costs
+• Ensure Consistent Responses
+
+## 2. Session Management
+• Session management is something required for all type of applications. Therefore, it is a common use case for LLM applications as well
+• LLM applications often need to tailor their responses based on user-specific data, such as preferences, past interactions, or progress.
+• Storing session data allows the application to track and remember user-specific details, providing a more personalized experience.
+• Thanks to Session management, LLMs can produce better responses aligning with the user preferences in LLM applications.
+> What do we gain using Redis for session management in Redis
+1. Personalized
+1. Context Retention
+  • For applications like chatbots or virtuals assistants, retaining session context is essential to ensure continuity in conversations.
+  
+## 3. Storing Chat Conversation History
+• Chatbots are probably the most common use case of LLMs. There user setting and writing something to the application and LLM responds, where it provide users a context-aware, personalized and efficient interactions with the language model.
+• For that purpose Redis is an excellent choice for storing chat histories in LLM application due to its spped, scalability, and support for data structures that align with conversational data needs.
+> What did we accomplished
+1. Context Awareness
+1. Personalization
+
+## 4. Rate Limiting
+• It is a technique used to control the number of requests a user or client can make to a system, server, or API within a specific period.
+> What do we accomplish
+1. Pretecting Resources
+1. Cost Management
+1. Security
+
+## 5. Real-Time Event Streaming for Dynamic Triggers
+
+
+================================================================================
+PAGE: Feature Engineering Concepts
+================================================================================
+# Feature Engineering Concepts
+
+---
+    
+---
+
+
+================================================================================
+PAGE: Machine Learning Notes
+================================================================================
+# Machine Learning Notes
+
+    ```mermaid
+graph TD
+    A[User on Notion Page] -->|Query| B[Notion Integration Service]
+    B -->|API Request| C[API Gateway]
+    C -->|Authenticate| D[Authentication Service]
+    D -->|Notion OAuth, Google API Key| C
+    C -->|Forward Query| E[AI Agent Core]
+    E -->|Fetch Context| F[VectorDB]
+    E -->|External Data| G[Google API]
+    F -->|Conversation History| E
+    G -->|API Response| E
+    E -->|Generate Response| B
+    B -->|Update Page| A
+    E -->|Store Conversation| F
+    E -->|Store Metadata| H[PostgreSQL]
+```
+
+
+================================================================================
+PAGE: Linear Regression
+================================================================================
+# Linear Regression
+
+---
+
+---
+Note:  1. Aim of our model
+    1. What is best fit line
+    1. cost functions
+    1. Equations of cost function and Datasets
+    1. Graph of Linear Regression
+    1. How to Minimize the Mean squared error.
+    1. Some Examples
+  
+# 1. Linear Regression
+> Linear regression is a statistical method used to model the realtionship between a dependent variable and one or more independent variables.
+> Provides valauble insights for prediction and data analysis.
+> It computes the linear relationship between the depent variable and one or more independent features by fitting a linear equation with observed data.
+> It predicts the continous output variables based on the independent input variable.
+
+## Q1. Why Linear regression is Important?
+• The interpretability of linear regression is one of its greatest strengths.
+• The model’s equation offers clear coefficients that illustrate the infulence of each independent variable on the dependent variable, enhancing our understanding of the underlying relationships.
+• Linear regression is transparent, easy to implement, and serves as a foundational concept for more advanced algorithms.
+
+## Q2. What is best fit line?
+• Our primary objective while using linear regression is to locate the best-fit line, which implies that error between the predicted and actual values should be kept to a minimum.
+• There will be least error in the best-fit line.
+• It provides a straight line that represents the relationship between the dependent and independent variables.
+• Slope of the line indicates how much the dependent variable changes for a unit change for a unit change in the independent variable(s).
+    • Y → Dependent/target variable
+    • X → Indpendent/predictor variable of Y.
+  • Linear regression performs the task to predict a dependent variable value(y) based on a given independent variables(x).
+• In linear regression some hypothesis are made to ensure reliability of the model’s results.
+  • Assumptions are:
+    • Once we find the best β₀ and β₁ values, we get the best-fit line. So when we are finally using our model for prediction, it will predict the value of y for the input value of x.
+
+## Q3. How to update β₀ and β₁ values to get the best-fit line?
+• To achieve the best-fit regression line, the model aims to predict the target value Y such that the error differene between the predicted value Y’ and the true value Y is minimum.
+• So its very important to update the β₀ and β₁ values, to reach the best value that minmizes the error between the predicted y value and the true Y value.
+
+## Types of Linear Regression
+    Note  • When there is only one independent feature it is known as Simple Linear Regression or Univariate Linear Regression and when there are more than one feature it is know are Mulltiple Linear Regression or Multivariate Regression.
+    • Simple linear regression is a powerful tool for understanding and predicting the behavior of a variable, however, it needs to meet a few conditions in order to be accurate and dependable solutions.
+    1. Linearity: 
+    • The independent and dependent variables have a linear relationship with one another. This implies that changes in the dependent variable follow those in the independent variable in a linear fashion.
+    • This means that there should be straight line that can be drawn through the data points. It the relationship is not linear, then linear regression will not be accurate model.
+    1. Independence:
+    1. Homoscedasticity:
+      1. Normality:
+
+  ---
+      
+  ---
+    • It involves more than one independent variable and one dependent variable.
+      • Y is the dependent variable
+    • X1, X2, …, Xn are the independent variables
+    • β0 is the intercept
+    • β1, β2, …, βn are the slopes
+    > The goal of the algorithm is to find the best fit plane equation that can predict the values based on the independent variables.
+    
+  ## Assumptions of Multiple Linear Regression
+    > For multiple linear regression, all four of the assumptions from simple linear regression apply. In addition to this, below are few more:
+    1. No multicollinearity:
+    • There is no high correlation between the independent variables.
+    • This indicates that there is little or no correlation between the independent variables.
+    • This occurs when two or more independent variables are highly correlated with each other, which makes it difficult to determine the individual effect of each variable on the dependent variable.
+    1. Additivity:
+    • The model assumes that the effect of changes in a predictor variable on the response variable is consistent regardless of the values of the other variables.
+    • This assumption implies that there is no interaction between variables in their effects on the dependent variable.
+    1. Feature Selection:
+    • In multiple linear regression, it is essential to carefully select the independent variables that will be included in the model.
+    • Including irrelevant or redundant variables may lead to overfitting and complicate the interpretation of the model.
+    1. Overfitting:
+    • It occurs when the model fits the training data too closely, capturing noise or random fluctuations that do not represent the true underlying relationship between variables.
+    • This can lead to poor generalization performance on new, unseen data.
+    
+  ## Multicollinearity
+    • Multiple linear regression sometimes faces issues like multicollinearity.
+    • Multicollinearity is a statistical phenomenon where two or more independent variables in a multiple regression model are highly correlated, making it difficult to assess the individual effects of each variable on the dependent variable.
+    • Detecting Multicollinearity includes two techniques:
+    
+  ### Use Cases of MLR
+    > MLR allows us to analyze realtioship between mulitple independent variables and a single dependent variable. 
+    1. Real Estate Pricing 
+    1. Financial Forecasting
+    1. Agricultural Yield Prediction
+    1. E-commerce Sales Analysis
+
+## Cost Function for Linear Regression
+• The difference between the predicted value Y’ and true value Y and it is called cost function and the loss function.
+• In linear Regression, the Mean Squared Error (MSE) cost function is employed. Which calculates the avg of the squared errors between the predicted values Yi’ and the actual value Yi.
+• The purpose is to determine the optimal values for the intercept and the coefficient of the input feature providing the best-fit line for the given data points.
+Where:
+  • J(θ) is the cost function
+    • m is the number of training examples
+    • hθ(x(i)) is the predicted value for the i-th training example
+    • y(i) is the actual value for the i-th training example
+  • Utilizing the MSE function, the iterative process of gradient descent is applied to update the values of θ1 & θ2. This ensures that the MSE value converges to the global minima, signifying the most accurate fit of the linear regression line to the dataset.
+• This process invovles continously adjusting the parameters θ1 and θ2 based on the gradients calculated from the MSE.
+
+### Gradient Descent for Linear Regression
+• A linear regression model can be trained using the optimization algorithm gradient descent by iteratively modifying the model’s parameters to reduce the mean squared error (MSE) of the model on a training dataset.
+• To update θ1 and θ2 values and then iteratively update the values, reaching minimum cost.
+• Finding the coefficients of a linear equation that best fits the training data is the objective of linear regression. By moving in the direction of the Mean Squared Error negative gradient with respect to the coefficients, the coefficients can be changed.
+  
+  ---
+      
+  ---
+    A variety of evalution measures can be used to determine the strength of any linear regression model. These assessment metrics often give an indication of how well the model is producing the observed outputs.
+    The Most Common Measurements are:
+    Mean Square Error (MSE)  Where:
+    • m is the number of data points
+    • y(i) is the true value
+    • y^(i) is the predicted value
+    MSE is sensitive to outliers as large errors contribute significantly to the overall score.
+    
+  ## 01. Mean Absolute Error (MAE)
+    
+  ---
+    > Mean Absolute Error is an evalution metric used to calculate the accuracy of a regression model.
+    > It measures the avg absolute differene between the predicted value and actual values.
+    
+  ## 02. R-Squared
+    
+  ---
+    > A statistical metric frequently used to assess the goodness of fit of a regression model is the R-squared score, also referred to as the coefficient of determination.
+    > It quantifies the percentage of the dependent variable’s variation that the model’s independent variables contribute to.
+    > R2 is a usefull statistic for evaluating the overall effectiveness and explanatory power of regression model.
+    > R-squared quantifies how well a model fits the data. Higher values indicate a better fit, while lower values suggest the model is less effective.
+      where:
+    ```python
+  import numpy as np
+  import pandas as pd
+  from sklearn.linear_model import LinearRegression
+  from sklearn.metrics import r2_score
+  
+  # Sample dataset: Predictor (X) and Dependent Variable (y)
+  np.random.seed(42)
+  X = np.random.rand(100, 2)  # Two predictors
+  y = 3.5 * X[:, 0] + 1.8 * X[:, 1] + np.random.normal(0, 0.5, 100)  # y depends on both predictors
+  
+  model = LinearRegression()
+  model.fit(X, y)
+  
+  # Predict y using the trained model
+  y_pred = model.predict(X)
+  ```
+    
+  ## 03. Adjusted R-Squared
+    
+  ---
+    > It is a performance metrics which can be termed as a more refined version of R-squared which priorities the input features that correlates with the target variable.
+    > While R-squared always increases when more predictos are added, Adjusted R-squared increases only if the new predictors genuinely imporve the model.
+    > It prevents overfitting by balancing the model’s performance with its complexity.
+      • where
+    • A higher Adjusted R-Squared indicates that the model fits the data well without including unnecessary predictors, suggesting that the chosen features are meaningful and contribute to explaining the variability in the dependent variable.
+    • On the other hand lower or negative adjusted r-squared suggests that adding more predictors does not improve the model’s performance and may even harm it.
+    ```python
+  n = X.shape[0]  # Number of observations
+  p = X.shape[1]  # Number of predictors
+  adjusted_r2 = 1 - (1 - r2) * (n - 1) / (n - p - 1)
+  print(f"Adjusted R-squared: {adjusted_r2:.4f}")
+  ```
+    R-squared vs Adjusted R-squared
+
+
+================================================================================
+PAGE: ML Models
+================================================================================
+# ML Models
+
+  ---
+      
+  ---
+    Note:  
+  # 1. Linear Regression
+    > Linear regression is a statistical method used to model the realtionship between a dependent variable and one or more independent variables.
+    > Provides valauble insights for prediction and data analysis.
+    > It computes the linear relationship between the depent variable and one or more independent features by fitting a linear equation with observed data.
+    > It predicts the continous output variables based on the independent input variable.
+    
+  ## Q1. Why Linear regression is Important?
+    • The interpretability of linear regression is one of its greatest strengths.
+    • The model’s equation offers clear coefficients that illustrate the infulence of each independent variable on the dependent variable, enhancing our understanding of the underlying relationships.
+    • Linear regression is transparent, easy to implement, and serves as a foundational concept for more advanced algorithms.
+    
+  ## Q2. What is best fit line?
+    • Our primary objective while using linear regression is to locate the best-fit line, which implies that error between the predicted and actual values should be kept to a minimum.
+    • There will be least error in the best-fit line.
+    • It provides a straight line that represents the relationship between the dependent and independent variables.
+    • Slope of the line indicates how much the dependent variable changes for a unit change for a unit change in the independent variable(s).
+    • Linear regression performs the task to predict a dependent variable value(y) based on a given independent variables(x).
+    • In linear regression some hypothesis are made to ensure reliability of the model’s results.
+    • Once we find the best β₀ and β₁ values, we get the best-fit line. So when we are finally using our model for prediction, it will predict the value of y for the input value of x.
+    
+  ## Q3. How to update β₀ and β₁ values to get the best-fit line?
+    • To achieve the best-fit regression line, the model aims to predict the target value Y such that the error differene between the predicted value Y’ and the true value Y is minimum.
+    • So its very important to update the β₀ and β₁ values, to reach the best value that minmizes the error between the predicted y value and the true Y value.
+    
+  ## Types of Linear Regression
+        
+  ## Cost Function for Linear Regression
+    • The difference between the predicted value Y’ and true value Y and it is called cost function and the loss function.
+    • In linear Regression, the Mean Squared Error (MSE) cost function is employed. Which calculates the avg of the squared errors between the predicted values Yi’ and the actual value Yi.
+    • The purpose is to determine the optimal values for the intercept and the coefficient of the input feature providing the best-fit line for the given data points.
+      Where:
+    • Utilizing the MSE function, the iterative process of gradient descent is applied to update the values of θ1 & θ2. This ensures that the MSE value converges to the global minima, signifying the most accurate fit of the linear regression line to the dataset.
+    • This process invovles continously adjusting the parameters θ1 and θ2 based on the gradients calculated from the MSE.
+    
+  ### Gradient Descent for Linear Regression
+    • A linear regression model can be trained using the optimization algorithm gradient descent by iteratively modifying the model’s parameters to reduce the mean squared error (MSE) of the model on a training dataset.
+    • To update θ1 and θ2 values and then iteratively update the values, reaching minimum cost.
+    • Finding the coefficients of a linear equation that best fits the training data is the objective of linear regression. By moving in the direction of the Mean Squared Error negative gradient with respect to the coefficients, the coefficients can be changed.
+      > It is a supervised mahcine learning algorithm used for classification and regression task.
+    > While it can handle regression problems, SVM is particularly well-suited for classification tasks.
+    • It aims to find the optimal hyperplane in an N-dimensional space to seprate data points into different classes.
+    
+  ## SVM Terminology:
+    1. Hyperplane: A decision boundary separating different classes in feature space, represented by the equation wx +b = 0 in linear classification.
+    1. Support Vectors: The closest data points to the hyperplane, crucial for determining the hyperplane and margin in SVM.
+    1. Margin: Distance between the hyperplane and the support vectors. SVM aims to maximize this margin for better classification
+    1. Kernal: 
+    > Logistic Regression aims to solve classification problems. It does this by predicting categorical outcomes, unlike linear regression that predicts a continous outcome.
+    > In Logistic regression, instead of fitting a regression line, we fit an “S” shaped logistic function, which predicts two maximum values (0 or 1).
+    
+  ## Sigmoid Function
+    > In logistic regression, we need a function that can map any real-valued number to the range [0, 1] to represent probabilities.
+    > The sigmoid function serves this purpose
+      • where :
+    
+  ## Q: How does it Work?
+    Example: 
+    There is a dataset given which contains the information of various users obtained from the social networking sites. There is a car making company that has recently launched a new SUV car. So the company wanted  to check how many users from the dataset, wants to purchase the car.
+    Steps in Logistic Regression:
+    • To implement the Logistic Regression using python, we will use the some steps:
+    1. Data Pre-processing step: In this step, we will prepare the data so that we can use it in our code efficiently.
+    ```python
+  # step: 01 importing libraries
+  import numpy as np
+  import matplotlib.pyplot as plt
+  import pandas as pd
+  
+  df = pd.read_csv('https://raw.githubusercontent.com/Avik-Jain/100-Days-Of-ML-Code/refs/heads/master/datasets/Social_Network_Ads.csv')
+  ```
+    • Now after loading the datasets, we will extract the dependent and independent variables from the given dataset. 
+    ```python
+  # Extracting Independent and dependent value
+  X = df.loc[:, ['Age', 'EstimatedSalary']]
+  y = df['Purchased']
+  ```
+    • Now after this, we will split our dataset into a training set and test set.
+    ```python
+  # Splitting the dataset
+  from sklearn.model_selection import train_test_split
+  X_train, X_test, y_train, y_test = train_test_split(X, y, train_size=0.75, random_state=0)
+  
+  ```
+    • In logistic regression, we will do feature scaling because we want accurate result of predictions. Here we will only scale the independent variable because dependent variable have only 0 and 1 values.
+    ```python
+  # feature scaling
+  from sklearn.preprocessing import StandardScaler
+  scaler = StandardScaler()
+  X_train = scaler.fit_transform(X_train)
+  X_test = scaler.fit_transform(X_test)
+  ```
+    1. Fitting Logistic Regression to the training set
+    • We have prepared our dataset, and now we will train the dataset using the training set.
+    ```python
+  from sklearn.linear_model import LogisticRegression
+  log_model = LogisticRegression(random_state=0)
+  log_model.fit(X_train, y_train)
+  ```
+    1. Predicting the Test Result
+    • Our model is well trained on the training set, so will now predict the result by using test set data. 
+    ```python
+  y_pred = classifier.predict(X_test)
+  # Predicting the test set result
+  ```
+    1. Test Accuracy of the result
+    • Here we will create the confusion matrix here to check the accuracy of the classification.
+    • To create it, we need to import the confusion_matrix function of the sklearn library.
+    ```python
+  # Creating the Confusion matrix
+  from sklearn.metrics import confusion_matrix
+  cm = confusion_matrix(y_test, y_pred)
+  ```
+    1. Visualizing the training set result
+    • Finally, we will visualize the training set result. To visualize the result, we will use ListedColormap class of matplotlib library. Below is the code for it.
+    ```python
+  # Visualizing the training set result
+  from matplotlib.colors import ListedColormap
+  x_set, y_set = x_train, y_train
+  x1, x2 = nm.
+  ```
+
+
+================================================================================
+PAGE: End-To-End ML Project
+================================================================================
+# End-To-End ML Project
+
+# 01. ML workFlow
+  ☑ Look at the big picture
+    ☑ Get the data
+    ☑ Discover and visualize the data to gain insights
+    ☐ Prepare the data for ML algorithms
+    ☐ Select a model and train it
+    ☐ Fine-tune your model
+    ☐ Present our solution
+    ☐ Launch, monitor and maintain our system
+  
+## 01. Look at the Big Picture
+
+---
+> Our Model should learn from this data and be able to predict the median housing price in any district, given all the other metrics(features).
+District: It is a block groups, where it typically has a population of 600 to 3000 people.
+
+## Frame the Problem
+• 1st question to ask 
+  • what exactly is the business objetive for this task?
+    • How does the company expect to use and benefit from this model?
+  • With the help of these question we will determine
+  • How we will frame the problem
+    • What algorithms we will select
+    • What performance measure we will use to evaluate our model
+    • And how much effort we should spend tweaking it.
+  
+### Pipelines
+> A sequence of data processing components is called a data pipeline.
+• Components typically run asynchronously. Each component pulls a large amount of data, process it, and spits out the result in another data store, and then some time later the next component in the pipeline pulls this data and spits out its own output, and so on.
+• Each component is fairly self-contained: the interface between components is simply the data store.
+
+### After Getting all the answers we will frame the problem
+1. supervised learning
+1. Regression task
+1. Batch learning
+  1. If the data was huge, we could either split our batch learning work across multiple servers(using the MapReduce technique, as we will see later), or you could use an online learning technique instead.
+  
+### Now we will select a Performance Measure
+> A typical performance measure for regression problems is the Root Square Error(RMSE).
+It gives an idea of how much error the system typically makes in its predictions, with a higher weight for large errors.
+Where:
+  • n —> Number of instances in the dataset
+    • x^i —> vector of all the feature values
+    • y^i —> label for ith instances
+    • X —> Matrix containing all the feature values
+    • h —> our system’s prediction function, also called a hypothesis.
+    • RMSE(X, y) —> cost function
+  > Even though the RMSE is generally the preferred performance measure for regression tasks, in some contexts you may prefer to use another function.
+> for example, suppose that there are many outliers districts. In that case, we may consider using the Mean Absolute Deviation/Error(MAE).
+• Both the RMSE and MAE are ways to measure the distance between two vectors
+  • vectors of predictions
+    • vectors of target values
+  
+### Check the assumptions
+• Lastly, it is good practice to list and verify the assumption that were made so far(by others and you)
+
+## 02. Get the data
+
+---
+
+### Create the workspace
+
+### Download the Data
+• Here we using data from this link raw.githubusercontent.com/ageron/handson-ml/refs/heads/master/datasets/housing/housing.csv
+
+### Take a Quick Look at the Data Structure
+df.info() : 
+From here we can know about the dtypes, cols with null value, number of colums, and so on.
+In simple words, an overview of our dataset.
+df.describe() :
+> Discriptive stat.
+It gives us the idea about how our columns are distributed, and we can also know If our cols have been capped or not.
+We can also use df.hist(bins=n) to get the visual overview of our data.  Here we can also observe, how our data is distributed. So that we can work on it.
+  
+### Create a test set
+> Before we do anything else, it’s a good practice to keep our test data seprate so that if any new data coming through we can create components for the pipeline to handle those data.
+Now we have couple of method to seprate our data.
+1. train_test_split method it will randomaly select the data.
+1. Using starified method where we try to mimic the population data ratio, where sample is representative of the population.
+```python
+# Now we will use the startified sampling method to select the test and train sets
+from sklearn.model_selection import StratifiedShuffleSplit
+
+split = StratifiedShuffleSplit(n_splits=1, test_size=0.8, random_state=42)
+
+for train_index, test_index in split.split(df, df['income_cat']):
+    strat_train_set = df.loc[train_index]
+    strat_test_set = df.loc[test_index]
+```
+
+### Discover and Visualize the Data To Gain Insights
+To continue furthur we will do some basic steps like:
+Deep copy our Strat_train_set : df = strat_train_set.copy()
+From here now we are going to just follow our intution to under the data more deeply.
+for exmaple we have longitude as well latitude columns, therefore with the help of these two columns we can gain insight if the location our house affects our price.
+```python
+df.plot(kind="scatter", x='longitude', y='latitude')
+plt.show()
+```
+From above visual we missing some insigts like:
+      Updated Code
+```python
+df.plot(kind='sactter', x='longitude', y='latitude', alpha=0.4,
+				s = df['pupulation']/100, # size
+				label = 'pupulation', # labelling on our graph
+				figsize = (10,7),
+				c = 'median_house_value', # color code based on the house value
+				cmap = plt.get_cmap('jet'), # color coding bar with value
+				colorbar = True)
+plt.legend()
+```
+From above we have added some extra attribute to understand our dataset’s geolocation.
+> Even from here we can make this more insightful using map of california and pointing our house location on that map, which can give us more insights
+> Downloading california map
+```python
+# Download the California image
+import os
+import urllib
+
+images_path = os.path.join('.', "images", "end_to_end_project")
+os.makedirs(images_path, exist_ok=True)
+DOWNLOAD_ROOT = "https://raw.githubusercontent.com/ageron/handson-ml/master/"
+filename = "california.png"
+print("Downloading", filename)
+url = DOWNLOAD_ROOT + "images/end_to_end_project/" + filename
+urllib.request.urlretrieve(url, os.path.join(images_path, filename))
+
+```
+> Now adding above map into our scatter plot
+```python
+import matplotlib.image as mpimg
+california_img=mpimg.imread('.' + '/images/end_to_end_project/california.png')
+ax = df.plot(kind="scatter", x="longitude", y="latitude", figsize=(10,7),
+                       s=df['population']/100, label="Population",
+                       c="median_house_value", cmap=plt.get_cmap("jet"),
+                       colorbar=False, alpha=0.4,
+                      )
+plt.imshow(california_img, extent=[-124.55, -113.80, 32.45, 42.05], alpha=0.5,
+           cmap=plt.get_cmap("jet"))
+plt.ylabel("Latitude", fontsize=14)
+plt.xlabel("Longitude", fontsize=14)
+
+prices = df["median_house_value"]
+tick_values = np.linspace(prices.min(), prices.max(), 11)
+cbar = plt.colorbar()
+cbar.ax.set_yticklabels(["$%dk"%(round(v/1000)) for v in tick_values], fontsize=14)
+cbar.set_label('Median House Value', fontsize=16)
+
+plt.legend(fontsize=16)
+# save_fig("california_housing_prices_plot")
+plt.show()
+```
+
+Observation  1. We can see that house near the river side are more expensive
+    1. We can also see the high density area in a cluster.
+  
+### Looking for correlations
+df.corr(numeric_only=True)['median_house_value'].sort_values(ascending=False)
+Observation  range → [-1, +1]
+    median_income is highly +vely correlated to the median house value
+    Correlation coefficients only measures linear correlations
+  Another way to check for correlation between attributes is to use pandas scatter_matrix method, which plots every numerical against other numerical attribute against every other numerical attribute.
+```python
+from pandas.plotting import scatter_matrix
+attributes = ['median_house_value', 'median_income', 'total_rooms', 'housing_median_age']
+scatter_matrix(df[attributes], figsize=(12,8))
+plt.show()
+```
+Observation  1. Our median income is higly correlated to the house median value.
+    1. And as we observed earlier our median_income is capped, hence we can see in our graph how we are having a linear scatter plots at the end of the graph.
+  
+### Experimenting with attribute combinations
+Finding/ Quirks  1. Most the attributes are tail heavy.
+    1. Total_rooms, tatal_bedrooms, population is not providing much information or correlation with median house value
+  Adding new cols rooms_per_household bedrooms_per_household, and population_per_household
+```python
+# total number of rooms in a district is not very useful if you don't know the total number of districts
+df['rooms_per_household']=df['total_rooms']/df['households']
+df['bedrooms_per_room']=df['total_bedrooms']/df['total_rooms']
+df['population_per_household']=df['population']/df['households']
+```
+Now lets check their correlation with the median_house_value
+```python
+df.corr(numeric_only=True)['median_house_value'].sort_values(ascending=False)
+```
+median_house_value          1.000000
+median_income               0.687151
+rooms_per_household         0.146255
+total_rooms                 0.135140
+housing_median_age          0.114146
+households                  0.064590
+total_bedrooms              0.047781
+population_per_household   -0.021991
+population                 -0.026882
+longitude                  -0.047466
+latitude                   -0.142673
+bedrooms_per_room          -0.259952
+Name: median_house_value, dtype: float64Observation  1. bedrooms_per_household is negatively correlated to the median_house_value. 
+  ```python
+# visual representation median_house_vaue with bedrooms_per_room 
+df.plot(kind='scatter', x='rooms_per_household', y='median_house_value', alpha=0.2)
+plt.axis([0, 5, 0, 520000])
+plt.show()
+```
+
+## Prepare the Data for ML algorithms
+> It’s time to prepare the data for our ML algorithms. Instead of just doing this manually, we should write functions to do that, for several good reasons:
+> Reproduce these transformations easily on any dataset(eg: the next time we get a fresh dataset)
+> In future we can build a library for the transformation functions that you can resuse in future projects.j
+> We can use these functions in our live system to transform the new data before feeding it to our algoritms.
+> This will make it possible for us to easily try various transformations and see which combination of transfromations works best.
+
+---
+Its time to prepare the data for our ML algorithms
+```python
+df = strat_train_set.drop(columns = ['median_house_value']
+df_labels = strat_train_set['median_house_value'].copy() # deep copy
+```
+
+### Data Cleaning
+```python
+# Most ML algo can't work with the missing values, so we will create few function to handle this
+# Earlier noticed that the total_bedrooms attributes has some missing values, let's fix this
+    # get rid of the corresponding districts.
+    # get rid of the whole attribute.
+    # set the values to some value
+```
+```python
+df.dropna(subset=['total_bedrooms']) # option 01
+df.drop('total_bedrooms', axis=1) # option 02
+med = df['total_bedrooms'].median() # option 03
+df['total_bedrooms'].fillna(med, inplace=True)
+```
+Imputer method for handling missing value
+```python
+from sklearn.impute import SimpleImputer
+
+imputer = SimpleImputer(strategy = 'medain')
+df_num = df.drop('ocean_proximity', axis=1)
+imputer.fit(df_num) # this will calculate median value for each columns
+imputer.statistics_ # returns median value for each columns
+X = imputer.transform(df_num)
+df_tr = pd.DataFrame(X, columns = df_num.columns, index=df_num.index)
+df_tr.head(3)
+```
+
+### Handling Text and Categorical Attributes
+Earlier we left out the categorical attribute ocean_proximity because it is a text attribute so we cannot compute its median.
+> Most ML algo prefer to work with numbers anyway, so let’s convert these categories from text to numbers. For this, we can use pandas’s factorize() method which maps each category to a different interger.
+
+
+================================================================================
+PAGE: Exploratory Data Analysis(EDA)
+================================================================================
+# Exploratory Data Analysis(EDA)
+
+### EDA with Red Wine Data
+
+
+================================================================================
+PAGE: Matplotlib
+================================================================================
+# Matplotlib
+
+---
+    
+---
+
+
+================================================================================
+PAGE: Plotly and Bokeh
+================================================================================
+# Plotly and Bokeh
+
+---
+    
+---
+
+
+================================================================================
+PAGE: Numpy
+================================================================================
+# Numpy
+
+---
+    
+---
+
+
+================================================================================
+PAGE: Statistics
+================================================================================
+# Statistics
+
+---
+    
+---
+
+
+================================================================================
+PAGE: Python Notes
+================================================================================
+# Python Notes
+
+---
+    
+---
+
+
+================================================================================
+PAGE: Pandas
+================================================================================
+# Pandas
+
+---
+    
+---
+
+
+================================================================================
+PAGE: Seaborn
+================================================================================
+# Seaborn
+
+---
+    
+---
+
+
+================================================================================
+PAGE: Evaluation Metrics for Linear Regression
+================================================================================
+# Evaluation Metrics for Linear Regression
+
+---
+
+---
+A variety of evalution measures can be used to determine the strength of any linear regression model. These assessment metrics often give an indication of how well the model is producing the observed outputs.
+The Most Common Measurements are:
+Mean Square Error (MSE)  It is an evaluation metric that calculates the average of the squared differences between the actual and predicted values for all the data points.
+    Where:
+• m is the number of data points
+• y(i) is the true value
+• y^(i) is the predicted value
+MSE is sensitive to outliers as large errors contribute significantly to the overall score.
+
+## 01. Mean Absolute Error (MAE)
+
+---
+> Mean Absolute Error is an evalution metric used to calculate the accuracy of a regression model.
+> It measures the avg absolute differene between the predicted value and actual values.
+
+## 02. R-Squared
+
+---
+> A statistical metric frequently used to assess the goodness of fit of a regression model is the R-squared score, also referred to as the coefficient of determination.
+> It quantifies the percentage of the dependent variable’s variation that the model’s independent variables contribute to.
+> R2 is a usefull statistic for evaluating the overall effectiveness and explanatory power of regression model.
+> R-squared quantifies how well a model fits the data. Higher values indicate a better fit, while lower values suggest the model is less effective.
+where:
+  • R2 → R-Squared
+    • SSR → sum of squared residuals between the predicted values and actual values.
+    • SST → total sum of squares, which measures the total variance in the dependent variable.
+  ```python
+import numpy as np
+import pandas as pd
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import r2_score
+
+# Sample dataset: Predictor (X) and Dependent Variable (y)
+np.random.seed(42)
+X = np.random.rand(100, 2)  # Two predictors
+y = 3.5 * X[:, 0] + 1.8 * X[:, 1] + np.random.normal(0, 0.5, 100)  # y depends on both predictors
+
+model = LinearRegression()
+model.fit(X, y)
+
+# Predict y using the trained model
+y_pred = model.predict(X)
+```
+
+## 03. Adjusted R-Squared
+
+---
+> It is a performance metrics which can be termed as a more refined version of R-squared which priorities the input features that correlates with the target variable.
+> While R-squared always increases when more predictos are added, Adjusted R-squared increases only if the new predictors genuinely imporve the model.
+> It prevents overfitting by balancing the model’s performance with its complexity.
+• where
+  • n = number of data points (observations)
+    • k = number of predictors (features)
+  • A higher Adjusted R-Squared indicates that the model fits the data well without including unnecessary predictors, suggesting that the chosen features are meaningful and contribute to explaining the variability in the dependent variable.
+• On the other hand lower or negative adjusted r-squared suggests that adding more predictors does not improve the model’s performance and may even harm it.
+```python
+n = X.shape[0]  # Number of observations
+p = X.shape[1]  # Number of predictors
+adjusted_r2 = 1 - (1 - r2) * (n - 1) / (n - p - 1)
+print(f"Adjusted R-squared: {adjusted_r2:.4f}")
+```
+R-squared vs Adjusted R-squared  The prime difference between R-squared and Adjusted R-squared lies in how they account for the number of predictors in a regression model:
+    R-squared measures the proportion of variance in the dependent variable explained by the independent variables. It always increases when more predictors are added, regardless of their relevance to the model. Adjusted R-squared, on the other hand, adjusts the R-squared value based on the number of predictors in the model. It accounts for the degrees of freedom, penalizing the addition of irrelevant predictors. As a result, Adjusted R-squared can decrease if a new predictor does not improve the model sufficiently.
+    • R-squared measures the proportion of variance in the dependent variable explained by the independent variables. It always increases when more predictors are added, regardless of their relevance to the model.
+    • Adjusted R-squared, on the other hand, adjusts the R-squared value based on the number of predictors in the model. It accounts for the degrees of freedom, penalizing the addition of irrelevant predictors. As a result, Adjusted R-squared can decrease if a new predictor does not improve the model sufficiently.
+
+
+================================================================================
+PAGE: Multiple Linear Regression
+================================================================================
+# Multiple Linear Regression
+
+---
+
+---
+• It involves more than one independent variable and one dependent variable.
+• Y is the dependent variable
+• X1, X2, …, Xn are the independent variables
+• β0 is the intercept
+• β1, β2, …, βn are the slopes
+> The goal of the algorithm is to find the best fit plane equation that can predict the values based on the independent variables.
+
+## Assumptions of Multiple Linear Regression
+> For multiple linear regression, all four of the assumptions from simple linear regression apply. In addition to this, below are few more:
+1. No multicollinearity:
+• There is no high correlation between the independent variables.
+• This indicates that there is little or no correlation between the independent variables.
+• This occurs when two or more independent variables are highly correlated with each other, which makes it difficult to determine the individual effect of each variable on the dependent variable.
+1. Additivity:
+• The model assumes that the effect of changes in a predictor variable on the response variable is consistent regardless of the values of the other variables.
+• This assumption implies that there is no interaction between variables in their effects on the dependent variable.
+1. Feature Selection:
+• In multiple linear regression, it is essential to carefully select the independent variables that will be included in the model.
+• Including irrelevant or redundant variables may lead to overfitting and complicate the interpretation of the model.
+1. Overfitting:
+• It occurs when the model fits the training data too closely, capturing noise or random fluctuations that do not represent the true underlying relationship between variables.
+• This can lead to poor generalization performance on new, unseen data.
+
+## Multicollinearity
+• Multiple linear regression sometimes faces issues like multicollinearity.
+• Multicollinearity is a statistical phenomenon where two or more independent variables in a multiple regression model are highly correlated, making it difficult to assess the individual effects of each variable on the dependent variable.
+• Detecting Multicollinearity includes two techniques:
+  • Correlation Matrix: Examining the correlation matrix among the independent variables is a common a way to detect multicollinearity. High correlations indicate potential multicollinearity.
+    • VIF( variance Inflation Factor): VIF is a measure that quantifies how much the variance of an estimated regression coefficient increases if your predictors are correlated. A high VIF (typically above 10) suggests mulitcollinearity,
+  
+### Use Cases of MLR
+> MLR allows us to analyze realtioship between mulitple independent variables and a single dependent variable. 
+1. Real Estate Pricing 
+1. Financial Forecasting
+1. Agricultural Yield Prediction
+1. E-commerce Sales Analysis
+
+
+================================================================================
+PAGE: Simple Linear Regression
+================================================================================
+# Simple Linear Regression
+
+Note• When there is only one independent feature it is known as Simple Linear Regression or Univariate Linear Regression and when there are more than one feature it is know are Mulltiple Linear Regression or Multivariate Regression.
+• Simple linear regression is a powerful tool for understanding and predicting the behavior of a variable, however, it needs to meet a few conditions in order to be accurate and dependable solutions.
+1. Linearity: 
+• The independent and dependent variables have a linear relationship with one another. This implies that changes in the dependent variable follow those in the independent variable in a linear fashion.
+• This means that there should be straight line that can be drawn through the data points. It the relationship is not linear, then linear regression will not be accurate model.
+1. Independence:
+  • The observation in the dataset are independent of each other.
+    • If the observations are not independent, then linear regression will not be an accurate model.
+  1. Homoscedasticity:
+  • Across all levele of the independent variable(s), the vairance of the errors is constant. This indicates that the amount of the independent variable(s) has no impact on the variance of the errors. If the variance of the residuals is not constant, then linear regression will not be an accurate model.
+  1. Normality:
+  • The residuals should be normally distributed. This means that the residual should follow a bell-shaped curve. If the residuals are not normally distributed, then linear regression will not be an accurate model.
+
+
+================================================================================
+PAGE: Support Vector Machine(SVM) Algorithm
+================================================================================
+# Support Vector Machine(SVM) Algorithm
+
+> It is a supervised mahcine learning algorithm used for classification and regression task.
+> While it can handle regression problems, SVM is particularly well-suited for classification tasks.
+• It aims to find the optimal hyperplane in an N-dimensional space to seprate data points into different classes.
+
+## SVM Terminology:
+1. Hyperplane: A decision boundary separating different classes in feature space, represented by the equation wx +b = 0 in linear classification.
+1. Support Vectors: The closest data points to the hyperplane, crucial for determining the hyperplane and margin in SVM.
+1. Margin: Distance between the hyperplane and the support vectors. SVM aims to maximize this margin for better classification
+1. Kernal:
+
+
+================================================================================
+PAGE: Logistic Regression
+================================================================================
+# Logistic Regression
+
+> Logistic Regression aims to solve classification problems. It does this by predicting categorical outcomes, unlike linear regression that predicts a continous outcome.
+> In Logistic regression, instead of fitting a regression line, we fit an “S” shaped logistic function, which predicts two maximum values (0 or 1).
+
+## Sigmoid Function
+> In logistic regression, we need a function that can map any real-valued number to the range [0, 1] to represent probabilities.
+> The sigmoid function serves this purpose
+• where :
+  • sigma(g): is the output between 0 and 1(probability estimate)
+    • (z): is the input to the function(linear combination of weights and features)
+    • (e): is the base of the natural logarithm
+  
+## Q: How does it Work?
+Example: 
+There is a dataset given which contains the information of various users obtained from the social networking sites. There is a car making company that has recently launched a new SUV car. So the company wanted  to check how many users from the dataset, wants to purchase the car.
+Steps in Logistic Regression:
+• To implement the Logistic Regression using python, we will use the some steps:
+  1. Data Pre-processing Step
+    1. Fitting Logistic Regression to the training set.
+    1. Predicting the test result.
+    1. Test accuracy of the result(creation of confusion matrix).
+    1. Visualizing the test set result.
+  1. Data Pre-processing step: In this step, we will prepare the data so that we can use it in our code efficiently.
+```python
+# step: 01 importing libraries
+import numpy as np
+import matplotlib.pyplot as plt
+import pandas as pd
+
+df = pd.read_csv('https://raw.githubusercontent.com/Avik-Jain/100-Days-Of-ML-Code/refs/heads/master/datasets/Social_Network_Ads.csv')
+```
+• Now after loading the datasets, we will extract the dependent and independent variables from the given dataset. 
+```python
+# Extracting Independent and dependent value
+X = df.loc[:, ['Age', 'EstimatedSalary']]
+y = df['Purchased']
+```
+• Now after this, we will split our dataset into a training set and test set.
+```python
+# Splitting the dataset
+from sklearn.model_selection import train_test_split
+X_train, X_test, y_train, y_test = train_test_split(X, y, train_size=0.75, random_state=0)
+
+```
+• In logistic regression, we will do feature scaling because we want accurate result of predictions. Here we will only scale the independent variable because dependent variable have only 0 and 1 values.
+```python
+# feature scaling
+from sklearn.preprocessing import StandardScaler
+scaler = StandardScaler()
+X_train = scaler.fit_transform(X_train)
+X_test = scaler.fit_transform(X_test)
+```
+1. Fitting Logistic Regression to the training set
+• We have prepared our dataset, and now we will train the dataset using the training set.
+```python
+from sklearn.linear_model import LogisticRegression
+log_model = LogisticRegression(random_state=0)
+log_model.fit(X_train, y_train)
+```
+1. Predicting the Test Result
+• Our model is well trained on the training set, so will now predict the result by using test set data. 
+```python
+y_pred = classifier.predict(X_test)
+# Predicting the test set result
+```
+1. Test Accuracy of the result
+• Here we will create the confusion matrix here to check the accuracy of the classification.
+• To create it, we need to import the confusion_matrix function of the sklearn library.
+```python
+# Creating the Confusion matrix
+from sklearn.metrics import confusion_matrix
+cm = confusion_matrix(y_test, y_pred)
+```
+1. Visualizing the training set result
+• Finally, we will visualize the training set result. To visualize the result, we will use ListedColormap class of matplotlib library. Below is the code for it.
+```python
+# Visualizing the training set result
+from matplotlib.colors import ListedColormap
+x_set, y_set = x_train, y_train
+x1, x2 = nm.
+```
+
